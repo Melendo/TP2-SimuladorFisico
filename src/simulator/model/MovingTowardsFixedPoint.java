@@ -22,6 +22,14 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 		Iterator<Body> it = bs.iterator();
 		Body bi;
 		Vector2D fc;
+		
+		while(it.hasNext()) {
+			bi = it.next();
+			fc = this.c.minus(bi.getPosition()).scale(g * bi.getMass());
+			bi.addForce(fc);
+			
+		}
+		
 
 	}
 
