@@ -10,11 +10,15 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 	double g;
 	
 	public MovingTowardsFixedPoint (Vector2D c, double g) {
-		if(c == null || g >0) {
-			throw new IllegalArgumentException() ;
+		if(c == null) {
+			throw new IllegalArgumentException("El vector c no debe ser null");
 		}
-		this.c = c;
-		this.g = g;
+		else this.c = c;
+		
+		if(g < 0) {
+			throw new IllegalArgumentException("La constante gravitacional debe ser positiva");
+		}
+		else this.g = g;
 	}
 
 	@Override
@@ -26,11 +30,14 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 		while(it.hasNext()) {
 			bi = it.next();
 			fc = this.c.minus(bi.getPosition()).scale(g * bi.getMass());
-			bi.addForce(fc);
-			
+			bi.addForce(fc);	
 		}
 		
 
 	}
+	
+	/*public String toString() {
+	return ;
+	}*/
 
 }

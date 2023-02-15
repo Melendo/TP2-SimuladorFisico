@@ -1,7 +1,6 @@
 package simulator.model;
 
 import org.json.JSONObject;
-
 import simulator.misc.Vector2D;
 
 public abstract class Body {
@@ -13,7 +12,7 @@ public abstract class Body {
 	protected Vector2D a;
 	protected double m;
 	
-
+	//FALTA ACELERACION...
 	Body(String id, String gid, Vector2D v, Vector2D p, double m) {
 		if(id == null ||  id.trim().length() <= 0) { 
 			throw new IllegalArgumentException("id debe contener al menos un caracter distinto del espacio en blanco");		
@@ -25,10 +24,7 @@ public abstract class Body {
 		}
 		else this.gid = gid;
 		
-		if(v == null) {
-			throw new IllegalArgumentException("El vector de velocidad no puede ser nulo");		
-		}
-		else this.v = v;
+		setVelocity(v);
 		
 		this.f = new Vector2D();
 		
@@ -68,6 +64,17 @@ public abstract class Body {
 
 	public Vector2D getVelocity() {
 		return v;
+	}
+	
+	public void setVelocity(Vector2D v) {
+		if(v == null) {
+			throw new IllegalArgumentException("El vector de velocidad no puede ser nulo");		
+		}
+		else this.v = v;
+	}
+	
+	public void setAcceleration(Vector2D a) {
+		this.a = a;
 	}
 
 

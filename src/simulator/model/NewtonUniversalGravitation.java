@@ -2,7 +2,6 @@ package simulator.model;
 
 import java.util.Iterator;
 import java.util.List;
-
 import simulator.misc.Vector2D;
 
 public class NewtonUniversalGravitation implements ForceLaws{
@@ -27,8 +26,8 @@ public class NewtonUniversalGravitation implements ForceLaws{
 			
 			bi = it.next();
 			if(bi.getMass() == 0) {
-				bi.v = new Vector2D();
-				bi.a = new Vector2D();
+				bi.setVelocity(new Vector2D());
+				bi.setAcceleration(new Vector2D());
 			}
 			else {
 				Iterator<Body> itT = bs.iterator();
@@ -48,5 +47,9 @@ public class NewtonUniversalGravitation implements ForceLaws{
 			}
 		}
 	}
+	
+	/*public String toString() {
+	return ;
+}*/
 
 }
