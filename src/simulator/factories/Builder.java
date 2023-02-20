@@ -3,8 +3,8 @@ package simulator.factories;
 import org.json.JSONObject;
 
 public abstract class Builder<T> {
-	private String _typeTag;
-	private String _desc;
+	protected String _typeTag;
+	protected String _desc;
 
 	public Builder(String typeTag, String desc) {
 		if (typeTag == null || desc == null || typeTag.length() == 0 || desc.length() == 0)
