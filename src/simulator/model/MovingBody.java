@@ -3,10 +3,12 @@ package simulator.model;
 import simulator.misc.Vector2D;
 
 public class MovingBody extends Body {
+	
+	private Vector2D a;
 
 	public MovingBody(String id, String gid, Vector2D v, Vector2D p, double m) {
 		super(id, gid, v, p, m);
-		
+		this.a = new Vector2D();
 	}
 
 	@Override

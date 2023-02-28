@@ -9,7 +9,7 @@ public abstract class Body {
 	protected Vector2D v;
 	protected Vector2D f;
 	protected Vector2D p;
-	protected Vector2D a;
+	//protected Vector2D a;
 	protected double m;
 	
 	//FALTA ACELERACION...
@@ -73,9 +73,9 @@ public abstract class Body {
 		else this.v = v;
 	}
 	
-	public void setAcceleration(Vector2D a) {
+	/*public void setAcceleration(Vector2D a) {
 		this.a = a;
-	}
+	}*/
 
 
 	public Vector2D getForce() {

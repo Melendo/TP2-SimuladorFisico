@@ -25,9 +25,10 @@ public class NewtonUniversalGravitation implements ForceLaws{
 		while(it.hasNext()) {
 			
 			bi = it.next();
+			//IGUAL ESTO SOBRA PORQUE SE HACE EN MOVINGBODY
 			if(bi.getMass() == 0) {
 				bi.setVelocity(new Vector2D());
-				bi.setAcceleration(new Vector2D());
+				//bi.setAcceleration(new Vector2D());
 			}
 			else {
 				Iterator<Body> itT = bs.iterator();
