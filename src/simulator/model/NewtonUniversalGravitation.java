@@ -6,7 +6,7 @@ import simulator.misc.Vector2D;
 
 public class NewtonUniversalGravitation implements ForceLaws{
 	
-	double g;
+	private double g;
 	
 	public NewtonUniversalGravitation(double g) {
 		if(g < 0) {
@@ -25,25 +25,18 @@ public class NewtonUniversalGravitation implements ForceLaws{
 		while(it.hasNext()) {
 			
 			bi = it.next();
-			//IGUAL ESTO SOBRA PORQUE SE HACE EN MOVINGBODY
-			if(bi.getMass() == 0) {
-				bi.setVelocity(new Vector2D());
-				//bi.setAcceleration(new Vector2D());
-			}
-			else {
-				Iterator<Body> itT = bs.iterator();
+			Iterator<Body> itT = bs.iterator();
 				
-				while(itT.hasNext()) {
+			while(itT.hasNext()) {
 					
-					bj = itT.next();
-					if(!(bi.equals(bj))) {
-						p = g*(bi.getMass()*bj.getMass());
-						d = bj.getPosition().distanceTo(bi.getPosition());
-						d *= d;
-						f = p/d;
-						fc = bj.getPosition().minus(bi.getPosition()).direction().scale(f); 
-						bi.addForce(fc); 
-					}
+				bj = itT.next();
+				if(!(bi.equals(bj))) {
+					p = g*(bi.getMass()*bj.getMass());
+					d = bj.getPosition().distanceTo(bi.getPosition());
+					d *= d;
+					f = p/d;
+					fc = bj.getPosition().minus(bi.getPosition()).direction().scale(f); 
+					bi.addForce(fc); 
 				}
 			}
 		}

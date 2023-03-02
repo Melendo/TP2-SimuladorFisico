@@ -9,10 +9,8 @@ public abstract class Body {
 	protected Vector2D v;
 	protected Vector2D f;
 	protected Vector2D p;
-	//protected Vector2D a;
 	protected double m;
 	
-	//FALTA ACELERACION...
 	Body(String id, String gid, Vector2D v, Vector2D p, double m) {
 		if(id == null ||  id.trim().length() <= 0) { 
 			throw new IllegalArgumentException("id debe contener al menos un caracter distinto del espacio en blanco");		
@@ -72,10 +70,6 @@ public abstract class Body {
 		}
 		else this.v = v;
 	}
-	
-	/*public void setAcceleration(Vector2D a) {
-		this.a = a;
-	}*/
 
 
 	public Vector2D getForce() {
