@@ -43,18 +43,16 @@ public class Controller {
 	}
 	
 	public void run(int n, OutputStream out) {
-		JSONObject states = new JSONObject();
 		JSONArray arrayStates = new JSONArray();		
-		states.put("states", arrayStates);
+		PrintStream p = new PrintStream(out);
+		
+		p.println("{");
+		p.println("\"states\": [");
 		for (int i = 0; i < n; i++) {
 			sim.advance();
 			arrayStates.put(sim.getState());
 		}
-		
-		PrintStream p = new PrintStream(out);
-		p.println("{");
-		p.println("\"states\": [");
-		// run the simulation n steps, etc.
+		p.println(arrayStates);
 		p.println("]");
 		p.println("}");
 
