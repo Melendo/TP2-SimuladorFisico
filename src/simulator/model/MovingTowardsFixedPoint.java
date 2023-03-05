@@ -15,7 +15,7 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 		}
 		else this.c = c;
 		
-		if(g < 0) {
+		if(g <= 0) {
 			throw new IllegalArgumentException("La constante gravitacional debe ser positiva");
 		}
 		else this.g = g;
@@ -29,7 +29,7 @@ public class MovingTowardsFixedPoint implements ForceLaws {
 		
 		while(it.hasNext()) {
 			bi = it.next();
-			fc = this.c.minus(bi.getPosition()).scale(g * bi.getMass());
+			fc = this.c.minus(bi.getPosition()).direction().scale(g * bi.getMass());
 			bi.addForce(fc);	
 		}
 		

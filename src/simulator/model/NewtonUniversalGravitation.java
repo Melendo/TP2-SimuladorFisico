@@ -9,7 +9,7 @@ public class NewtonUniversalGravitation implements ForceLaws{
 	private double g;
 	
 	public NewtonUniversalGravitation(double g) {
-		if(g < 0) {
+		if(g <= 0) {
 			throw new IllegalArgumentException("La constante gravitacional debe ser positiva");		
 		}
 		else this.g = g;
@@ -41,6 +41,24 @@ public class NewtonUniversalGravitation implements ForceLaws{
 			}
 		}
 	}
+	
+	/*//CAMBIARLO
+	public void apply (List<Body> bs) {
+        double f = 0;
+        for(Body b: bs) {//i
+            for(Body c: bs) {//j
+                if (c != b) {
+                    if(c.getPosition().distanceTo(b.getPosition()) == 0) 
+                        f = 0;
+                    else
+                    	f =  g *b.getMass()*c.getMass()/(c.getPosition().distanceTo(b.getPosition())*c.getPosition().distanceTo(b.getPosition()));
+                }
+////
+                b.addForce(c.getPosition().minus(b.getPosition()).direction().scale(f));
+            }
+        }
+    }*/
+
 	
 	/*public String toString() {
 	return ;

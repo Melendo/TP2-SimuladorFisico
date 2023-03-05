@@ -11,7 +11,7 @@ public abstract class Body {
 	protected Vector2D p;
 	protected double m;
 	
-	Body(String id, String gid, Vector2D v, Vector2D p, double m) {
+	Body(String id, String gid, Vector2D p, Vector2D v,  double m) {
 		if(id == null ||  id.trim().length() <= 0) { 
 			throw new IllegalArgumentException("id debe contener al menos un caracter distinto del espacio en blanco");		
 		}
@@ -104,10 +104,10 @@ public abstract class Body {
 	public JSONObject getState() {
 		JSONObject json = new JSONObject();
 		json.put("id", getId());
+		json.put("p", getPosition().asJSONArray());
+		json.put("v", getVelocity().asJSONArray());
+		json.put("f", getForce().asJSONArray());
 		json.put("m", getMass());
-		json.put("p", getPosition());
-		json.put("v", getVelocity());
-		json.put("f", getForce());
 		return json;
 	}
 

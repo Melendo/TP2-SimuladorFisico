@@ -27,7 +27,7 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 	}
 	
 	public void addBuilder(Builder<T> b) {
-		// add and entry ‘‘ b.getTag() -> b’’ to _builders.
+		// add and entry ï¿½ï¿½ b.getTag() -> bï¿½ï¿½ to _builders.
 		this._builders.put(b.getTypeTag(), b);
 		// add b.getInfo () to _buildersInfo
 		this._buildersInfo.add(b.getInfo());
@@ -43,16 +43,17 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 		// createInstance method and return the result if it is not null . The value you
 		// pass to createInstance is :
 		// info . has("data") ? info . getJSONObject("data") : new getJSONObject()
-		for(String type: _builders.keySet()) {
-			if(info.getString("type") == type) { //IGUAL FUNCIONA CON EQUALS MEJOR...
-				T o = _builders.get(type).createInstance(info.has("data") ? info.getJSONObject("data") : new JSONObject());
+			
+			if(info.getString("type") != null && _builders.containsKey(info.getString("type"))) { 
+				T o = _builders.get(info.getString("type")).createInstance(info.has("data") ? info.getJSONObject("data") : new JSONObject());
 				if (o != null)
 					return o;
 			}
-		}
+		
 		// If no builder is found or thr result is null ...
 		throw new IllegalArgumentException("Invalid value for createInstance: " + info.toString());
 	}
+	
 		
 	@Override
 	public List<JSONObject> getInfo() {

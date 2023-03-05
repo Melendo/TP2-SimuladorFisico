@@ -6,8 +6,8 @@ public class MovingBody extends Body {
 	
 	private Vector2D a;
 
-	public MovingBody(String id, String gid, Vector2D v, Vector2D p, double m) {
-		super(id, gid, v, p, m);
+	public MovingBody(String id, String gid,  Vector2D p, Vector2D v, double m) {
+		super(id, gid, p, v, m);
 		this.a = new Vector2D();
 	}
 

@@ -32,11 +32,13 @@ public class PhysicsSimulator {
 		for(String clave : listaId) {
 			mp.get(clave).advance(this.dt);
 		}
-		this.ta =+ this.dt;
+		this.ta += this.dt;
 	}	
+	
 	public void addGroup(String id) {
 		if(!mp.containsKey(id)) {
 			mp.put(id, new BodiesGroup(id, leyes));
+			listaId.add(id);
 		}
 		else {
 			throw new IllegalArgumentException("Ya existe un BodyGroup con ese id");

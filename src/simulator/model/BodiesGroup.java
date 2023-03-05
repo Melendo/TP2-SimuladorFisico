@@ -39,7 +39,7 @@ public class BodiesGroup {
 	
 	
 	void addBody(Body b) {
-		if(b == null || !bs.contains(b)) {
+		if(b == null || bs.contains(b)) {
 			throw new IllegalArgumentException("Ha ocurrido un error al tratar de a�adir el cuerpo");
 		}
 		bs.add(b);
