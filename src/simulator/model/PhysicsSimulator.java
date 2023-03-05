@@ -44,18 +44,27 @@ public class PhysicsSimulator {
 		}
 	}
 	public void addBody(Body b) {
-		
+		if(!mp.containsKey(b.getId())) {
+			mp.get(b.getId()).addBody(b);
+		}
+		else {
+			throw new IllegalArgumentException("Ya existe un Body con ese id en el Grupo");
+		}
 	}
-	public void setForceLaws(String id, ForceLaws f) {
-		
+	public void setForceLaws(String id, ForceLaws fl) {
+		if (!mp.containsKey(id)) {
+			throw new IllegalArgumentException("No existe un BG con este id");
+		}
+		else {
+			mp.get(id).setFl(fl);
+		}
 	}
 	public JSONObject getState() {
 		
 		return null;
 	}
 	public String toString() {
-		
-		return null;
+		return getState().toString();
 	}
 	
 }
