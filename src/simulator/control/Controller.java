@@ -28,21 +28,24 @@ public class Controller {
 	public void loadData(InputStream in) {
 		JSONObject jsonInupt = new JSONObject(new JSONTokener(in));
 		JSONArray groups = jsonInupt.getJSONArray("groups");
-		JSONArray laws = jsonInupt.getJSONArray("laws");
 		JSONArray bodies = jsonInupt.getJSONArray("bodies");
 		
 		for (int i = 0; i < groups.length(); i++) {
 			sim.addGroup(groups.getString(i));
 		}
-		for (int j = 0; j < laws.length(); j++) {
-			sim.setForceLaws(laws.getJSONObject(j).getString("id"), this.fabF.createInstance(laws.getJSONObject(j).getJSONObject("laws")));
+		
+		if(jsonInupt.has("laws")) {
+			JSONArray laws = jsonInupt.getJSONArray("laws");
+			for (int j = 0; j < laws.length(); j++) {
+				sim.setForceLaws(laws.getJSONObject(j).getString("id"), this.fabF.createInstance(laws.getJSONObject(j).getJSONObject("laws")));
+			}
 		}
 		for (int k = 0; k < bodies.length(); k++) {
 			sim.addBody(this.fabB.createInstance(bodies.getJSONObject(k)));
 		}
 	}
 	
-	public void run(int n, OutputStream out) {
+	public void run(double n, OutputStream out) {
 		JSONArray arrayStates = new JSONArray();		
 		PrintStream p = new PrintStream(out);
 		

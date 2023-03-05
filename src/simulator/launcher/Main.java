@@ -1,5 +1,10 @@
 package simulator.launcher;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.apache.commons.cli.CommandLine;
@@ -11,14 +16,18 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.json.JSONObject;
 
+import simulator.control.Controller;
 import simulator.factories.Builder;
 import simulator.factories.BuilderBasedFactory;
 import simulator.factories.Factory;
 import simulator.factories.MovingBodyBuilder;
+import simulator.factories.MovingTowardsFixedPointBuilder;
 import simulator.factories.NewtonUniversalGravitationBuilder;
 import simulator.factories.NoForceBuilder;
+import simulator.factories.StationaryBodyBuilder;
 import simulator.model.Body;
 import simulator.model.ForceLaws;
+import simulator.model.PhysicsSimulator;
 
 
 public class Main {
@@ -28,6 +37,7 @@ public class Main {
 	private final static Integer _stepsDefaultValue = 150;
 	private final static Double _dtimeDefaultValue = 2500.0;
 	private final static String _forceLawsDefaultValue = "nlug";
+	private final static String _outputDefaultValue = "the standard output";
 
 	// some attributes to stores values corresponding to command-line parameters
 	//
@@ -69,6 +79,8 @@ public class Main {
 			parseInFileOption(line);
 			parseDeltaTimeOption(line);
 			parseForceLawsOption(line);
+			parseStepsOption(line);
+			parseOutFileOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -109,6 +121,16 @@ public class Main {
 						+ factoryPossibleValues(_forceLawsFactory) + ". Default value: '" + _forceLawsDefaultValue
 						+ "'.")
 				.build());
+		
+		cmdLineOptions.addOption(Option.builder("o").longOpt("output").hasArg()
+				.desc("Output file, where output is written. Default value: "
+						+ _outputDefaultValue + ".")
+				.build());
+		
+		cmdLineOptions.addOption(Option.builder("s").longOpt("steps").hasArg()
+				.desc("An integer representing the number of simulation steps. Default value: "
+						+ _stepsDefaultValue + ".")
+				.build());
 
 		return cmdLineOptions;
 	}
@@ -145,6 +167,15 @@ public class Main {
 			throw new ParseException("In batch mode an input file of bodies is required");
 		}
 	}
+	
+	private static void parseOutFileOption(CommandLine line) throws ParseException {
+		if(line.hasOption("o")) {
+			_outFile = line.getOptionValue("o");
+			if (_outFile == null) {
+				_outFile = _outputDefaultValue;
+			}
+		}
+	}
 
 	private static void parseDeltaTimeOption(CommandLine line) throws ParseException {
 		String dt = line.getOptionValue("dt", _dtimeDefaultValue.toString());
@@ -153,6 +184,16 @@ public class Main {
 			assert (_dtime > 0);
 		} catch (Exception e) {
 			throw new ParseException("Invalid delta-time value: " + dt);
+		}
+	}
+	
+	private static void parseStepsOption(CommandLine line) throws ParseException {
+		String steps = line.getOptionValue("steps", _stepsDefaultValue.toString());
+		try {
+			_steps = Integer.parseInt(steps);
+			assert (_steps > 0);
+		} catch (Exception e) {
+			throw new ParseException("Invalid steps value: " + steps);
 		}
 	}
 
@@ -205,7 +246,21 @@ public class Main {
 	}
 
 	private static void startBatchMode() throws Exception {
+		InputStream is = new FileInputStream(new File(_inFile));
+        OutputStream os = null;
+
+        if(_outFile == null) {
+            os = System.out;
+        } else {
+            os = new FileOutputStream(new File(_outFile));
+        }
+		PhysicsSimulator sim = new PhysicsSimulator(_forceLawsFactory.createInstance(_forceLawsInfo), _dtime);
+		Controller ctr = new Controller(sim, _bodyFactory, _forceLawsFactory); 
+		ctr.loadData(is);
+		ctr.run(_dtime, os);
+		is.close();
 	}
+
 
 	private static void start(String[] args) throws Exception {
 		parseArgs(args);
