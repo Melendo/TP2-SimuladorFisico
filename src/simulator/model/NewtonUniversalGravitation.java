@@ -30,8 +30,8 @@ public class NewtonUniversalGravitation implements ForceLaws{
 			while(itT.hasNext()) {
 					
 				bj = itT.next();
-				if(!(bi.equals(bj))) {
-					p = g*(bi.getMass()*bj.getMass());
+				if(!(bi == bj)) {//No funiona los test con el equals bi y bj
+					p = g * bi.getMass() * bj.getMass();
 					d = bj.getPosition().distanceTo(bi.getPosition());
 					d *= d;
 					f = p/d;
@@ -42,26 +42,5 @@ public class NewtonUniversalGravitation implements ForceLaws{
 		}
 	}
 	
-	/*//CAMBIARLO
-	public void apply (List<Body> bs) {
-        double f = 0;
-        for(Body b: bs) {//i
-            for(Body c: bs) {//j
-                if (c != b) {
-                    if(c.getPosition().distanceTo(b.getPosition()) == 0) 
-                        f = 0;
-                    else
-                    	f =  g *b.getMass()*c.getMass()/(c.getPosition().distanceTo(b.getPosition())*c.getPosition().distanceTo(b.getPosition()));
-                }
-////
-                b.addForce(c.getPosition().minus(b.getPosition()).direction().scale(f));
-            }
-        }
-    }*/
-
 	
-	/*public String toString() {
-	return ;
-}*/
-
 }
