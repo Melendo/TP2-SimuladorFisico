@@ -30,23 +30,24 @@ public class BodiesGroup {
 		return id;
 	}
 
-	public void setFl(ForceLaws fl) {
+	public void setForceLaws(ForceLaws fl) {
 		if(fl == null ) { 
 			throw new IllegalArgumentException("ForceLaws no puede ser NULL");		
 		}
 		else this.fl = fl;
 	}
 	
-	//USAR CONTAINS???
+	
 	void addBody(Body b) {
-		if(b == null || !bs.add(b)) {
-			throw new IllegalArgumentException("Ha ocurrido un error al tratar de añadir el cuerpo");
+		if(b == null || !bs.contains(b)) {
+			throw new IllegalArgumentException("Ha ocurrido un error al tratar de aï¿½adir el cuerpo");
 		}
+		bs.add(b);
 	}
 	
 	
 	void advance(double dt) {
-		if(dt < 0) {
+		if(dt <= 0) {
 			throw new IllegalArgumentException("dt debe ser positivo");
 		}
 		else {

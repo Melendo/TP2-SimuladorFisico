@@ -31,7 +31,7 @@ public abstract class Body {
 		}
 		else this.p = p;
 		
-		if(m < 0) {
+		if(m <= 0) {
 			throw new IllegalArgumentException("La masa debe ser positiva");		
 		}
 		else this.m = m;
@@ -45,7 +45,7 @@ public abstract class Body {
 	}
 
 
-	public String getGid() {
+	public String getgId() {
 		return gid;
 	}
 

@@ -5,26 +5,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class PhysicsSimulator {
 
-	private double dt = 0;
-	private double ta = 0;
+	private double dt ;
+	private double ta ;
 	private ForceLaws leyes;
 	private Map<String,BodiesGroup> mp;
 	List <String> listaId;
 	
-	public PhysicsSimulator(double dt, ForceLaws leyes) {
-		if(dt >=0) {
+	public PhysicsSimulator( ForceLaws leyes, double dt) {
+		if(dt >=0 && leyes != null) {
 			this.dt = dt;
+			this.leyes = leyes;
+			mp = new HashMap<String, BodiesGroup>();
+			listaId = new ArrayList<String>();
 		} else {
-			throw new IllegalArgumentException("El valor del tiempo real por paso tiene que ser mayor o igual que 0");
-		}
-		if(leyes != null) {
-		this.leyes = leyes;
-		}else {
-			throw new IllegalArgumentException("El valor de las leyes no puede ser NULL");
+			throw new IllegalArgumentException();
 		}
 	}
 		
@@ -44,8 +43,8 @@ public class PhysicsSimulator {
 		}
 	}
 	public void addBody(Body b) {
-		if(!mp.containsKey(b.getId())) {
-			mp.get(b.getId()).addBody(b);
+		if(mp.containsKey(b.getgId())) {
+			mp.get(b.getgId()).addBody(b);
 		}
 		else {
 			throw new IllegalArgumentException("Ya existe un Body con ese id en el Grupo");
@@ -56,15 +55,26 @@ public class PhysicsSimulator {
 			throw new IllegalArgumentException("No existe un BG con este id");
 		}
 		else {
-			mp.get(id).setFl(fl);
+			mp.get(id).setForceLaws(fl);
 		}
 	}
 	public JSONObject getState() {
+		JSONObject jso = new JSONObject();
+		JSONArray jsa = new JSONArray();
+
 		
-		return null;
+
+		for (String clave : listaId)
+			jsa.put(mp.get(clave).getState());
+		jso.put("groups", jsa);
+		jso.put("time", this.ta);
+
+		return jso;
 	}
 	public String toString() {
 		return getState().toString();
 	}
+
+
 	
 }
