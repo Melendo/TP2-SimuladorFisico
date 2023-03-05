@@ -37,7 +37,7 @@ public class Main {
 	private final static Integer _stepsDefaultValue = 150;
 	private final static Double _dtimeDefaultValue = 2500.0;
 	private final static String _forceLawsDefaultValue = "nlug";
-	private final static String _outputDefaultValue = "the standard output";
+	private final static String _outputDefaultValue = "prueba.json ";
 
 	// some attributes to stores values corresponding to command-line parameters
 	//
